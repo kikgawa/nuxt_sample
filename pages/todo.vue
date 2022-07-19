@@ -1,15 +1,6 @@
 <template>
   <div>
-    <v-form @submit.prevent="addTask">
-      <v-layout row align-center x1>
-        <v-flex sm10 pa-2>
-          <v-text-field v-model="newTodo"></v-text-field>
-        </v-flex>
-        <v-flex sm2 pa-2>
-          <v-btn type="submit">追加</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-form>
+    <TodoNew @new-data="newData($event, todos)"></TodoNew>
     <ul>
       <li v-for="(todo, index) in todos">
         {{ todo.item }}
@@ -27,24 +18,32 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import TodoNew from '~/components/TodoNew.vue'
+
 export default {
   name: 'TodoPage',
+  components: { TodoNew },
   data() {
     return {
-      newTodo: '',
       todos: [],
+      title: 'Todo App',
+    }
+  },
+
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Todo App description',
+        },
+      ],
     }
   },
   methods: {
-    addTask() {
-      if (this.newTodo === '') return
-      let todo = {
-        item: this.newTodo,
-        isActive: false,
-      }
-      this.todos.push(todo)
-      this.newTodo = ''
-    },
     deleteTask(index) {
       this.todos.splice(index, 1)
     },
@@ -54,6 +53,9 @@ export default {
     },
     updateTask(index) {
       this.todos[index].isActive = false
+    },
+    newData(todos) {
+      this.todos = todos
     },
   },
 }
