@@ -9,6 +9,9 @@
       <ul>
         <li v-for="item in items" :key="item.id">
           {{ item.title }}
+          <nuxt-link :to="`/users/${item.user.id}`">{{
+            item.user.id
+          }}</nuxt-link>
           <div>{{ item.body.slice(1, 100) }}...</div>
           <a :href="item.url">{{ item.url }}</a>
         </li>

@@ -1,9 +1,12 @@
 <template>
   <div>
     <TodoNew @new-data="newData($event, todos)"></TodoNew>
+
     <ul>
       <li v-for="(todo, index) in todos">
-        {{ todo.item }}
+        <nuxt-link :to="`/edit/${index}`">
+          {{ todo.item }}
+        </nuxt-link>
         <span v-if="todo.isActive">
           <span>
             <input class="input" type="text" v-model="todo.item" key="edit" />
